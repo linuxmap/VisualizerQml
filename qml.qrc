@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>VideoGallary.qml</file>
+        <file>PictureGallary.qml</file>
+        <file>Anotation.qml</file>
+        <file>SettingsDialog.qml</file>
+        <file>ImageDialog.qml</file>
+        <file>Tools.qml</file>
+        <file>Acrylic.qml</file>
+        <file>PictureGrid.qml</file>
+        <file>ColorCell.qml</file>
+        <file>BehaviorButton.qml</file>
+        <file>common.js</file>
+        <file>AdjustDialog.qml</file>
+        <file>visualizer.qml</file>
+        <file>PictureFlow.qml</file>
+        <file>ImageViwer.qml</file>
+    </qresource>
+    <qresource prefix="/shaders">
+        <file>yuv420p.fsh</file>
+        <file>nv12.fsh</file>
+        <file>yuy2.fsh</file>
+        <file>yuv422p.fsh</file>
+    </qresource>
+</RCC>

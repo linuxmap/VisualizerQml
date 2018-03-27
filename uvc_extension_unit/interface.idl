@@ -1,0 +1,38 @@
+// IExtensionUnit interface
+// {2175421F-58AA-42F0-90F5-E72E3FB0CF70}
+//DEFINE_GUID(<<名称>>, 
+//0x2175421f, 0x58aa, 0x42f0, 0x90, 0xf5, 0xe7, 0x2e, 0x3f, 0xb0, 0xcf, 0x70);
+
+import "unknwn.idl";
+[
+   object,
+   local,
+   uuid(2175421F-58AA-42F0-90F5-E72E3FB0CF70),
+   pointer_default(unique)
+]
+interface IExtensionUnit : IUnknown
+{
+   HRESULT get_InfoSize(
+      [out] ULONG *pulSize);
+   HRESULT get_Info(
+      [in] ULONG ulSize,
+      [in, out, size_is(ulSize)] BYTE pInfo[]);
+   HRESULT get_PropertySize(
+      [in] ULONG PropertyId,
+      [out] ULONG *pulSize);
+ HRESULT get_Property(
+      [in] ULONG PropertyId,
+      [in] ULONG ulSize,
+      [in, out, size_is(ulSize)] BYTE pValue[]);
+   HRESULT put_Property(
+      [in] ULONG PropertyId,
+      [in] ULONG ulSize,
+      [in, out, size_is(ulSize)] BYTE pValue[]);
+   HRESULT get_PropertyRange(
+      [in] ULONG PropertyId,
+      [in] ULONG ulSize,
+      [in, out, size_is(ulSize)] BYTE pMin[],
+      [in, out, size_is(ulSize)] BYTE pMax[],
+      [in, out, size_is(ulSize)] BYTE pSteppingDelta[],
+      [in, out, size_is(ulSize)] BYTE pDefault[]);
+};

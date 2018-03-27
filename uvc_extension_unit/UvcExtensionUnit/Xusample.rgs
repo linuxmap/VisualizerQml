@@ -1,0 +1,35 @@
+HKLM
+{
+    NoRemove SYSTEM
+    {
+        NoRemove CurrentControlSet
+        {
+            NoRemove Control
+            {
+                NoRemove NodeInterfaces
+                {
+                    ForceRemove {9A1E7291-6843-4683-6D92-39BC7906EE49} = s 'Extension Unit Property Set'
+                    {
+                        val IID = b '2175421F-58AA-42F0-90F5-E72E3FB0CF70'
+                        val CLSID = b '79D3FD0F-172C-4E07-A755-A9D065BD5E34'
+                    }             
+                }
+            }
+        }
+    }
+}
+
+HKCR
+{
+    NoRemove CLSID
+    {
+         ForceRemove {79D3FD0F-172C-4E07-A755-A9D065BD5E34} = s 'HiteVision Extension Unit Interface'
+        {
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Both'
+            }
+        }
+
+    }
+}

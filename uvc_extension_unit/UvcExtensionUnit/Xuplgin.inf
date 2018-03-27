@@ -1,0 +1,92 @@
+; Copyright (c) HiteVision. All rights reserved.
+
+[Version]
+Signature="$CHICAGO$"
+Class=Image
+ClassGUID={6bdd1fc6-810f-11d0-bec7-08002be2092f}
+Provider=%CompanyName%
+DriverVer = 02/01/2018,10.0.16299.15
+
+[SourceDisksNames]
+1=%Package%
+
+[SourceDisksFiles]
+MyPlugin.ax=1
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[DestinationDirs]
+MyDevice.CopyList=11    ; %systemroot%\system32 on NT-based systems
+
+[Manufacturer]
+%CompanyName%=HiteVision
+
+[CompanyName]
+%MyDevice.DeviceDesc%=MyDevice,USB\VID_1D6B&PID_0102&REV_0318&MI_00
+
+[MyDevice.NT]
+Include=usbvideo.inf, ks.inf, kscaptur.inf, dshowext.inf
+Needs=USBVideo.NT, KS.Registration, KSCAPTUR.Registration.NT,
+DSHOWEXT.Registration
+AddReg=MyDevice.Plugins
+CopyFiles=MyDevice.CopyList
+
+[MyDevice.PlugIns]
+HKCR,CLSID\%Plugin.CLSID%,,,%PlugIn_IExtensionUnit%
+HKCR,CLSID\%Plugin.CLSID%\InprocServer32,,,MyPlugin.ax
+HKCR,CLSID\%Plugin.CLSID%\InprocServer32,ThreadingModel,,Both
+
+; The IID is aggregated onto the node given the GUID of the property set
+HKLM,System\CurrentControlSet\Control\NodeInterfaces\%XU_GUID%,,,%PlugIn_IExtensionUnit%
+; IID in Little-Endian form
+HKLM,System\CurrentControlSet\Control\NodeInterfaces\%XU_GUID%,IID,1,1f,42,75,21,aa,58,f0,42,90,f5,e7,2e,3f,b0,cf,70
+;CLSID in Little-Endian form
+HKLM,System\CurrentControlSet\Control\NodeInterfaces\%XU_GUID%,CLSID,1,0f,fd,d3,79,2c,17,07,4e,a7,55,a9,d0,65,bd,5e,34
+
+
+   [MyDevice.NT.Interfaces]
+AddInterface=%KSCATEGORY_CAPTURE%,GLOBAL,MyDevice.Interface
+AddInterface=%KSCATEGORY_RENDER%,GLOBAL,MyDevice.Interface
+AddInterface=%KSCATEGORY_VIDEO%,GLOBAL,MyDevice.Interface
+
+[MyDevice.Interface]
+AddReg=MyDevice.Interface.AddReg
+
+[MyDevice.Interface.AddReg]
+HKR,,CLSID,,%ProxyVCap.CLSID%
+HKR,,FriendlyName,,%MyDevice.DeviceDesc%
+HKR,,RTCFlags,0x00010001,0x00000010
+
+[MyDevice.NT.Services]
+AddService = usbvideo,0x00000002,MyDevice.ServiceInstall
+
+[MyDevice.ServiceInstall]
+DisplayName   = %USBVideo.SvcDesc%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_DEMAND_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\System32\Drivers\usbvideo.sys
+
+[MyDevice.CopyList]
+MyPlugin.ax
+
+[Strings]
+; Non-localizable
+Plugin.CLSID="{79D3FD0F-172C-4E07-A755-A9D065BD5E34}"
+ProxyVCap.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+XU_GUID="{9A1E7291-6843-4683-6D92-39BC7906EE49}"
+KSCATEGORY_RENDER="{65E8773E-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_VIDEO="{6994AD05-93EF-11D0-A3CC-00A0C9223196}"
+SERVICE_KERNEL_DRIVER=1
+SERVICE_DEMAND_START=3
+SERVICE_ERROR_NORMAL=1
+
+; Localizable
+CompanyName="HiteVision"
+Package="Installation Package"
+MyDevice.DeviceDesc="HiteVision Camera"
+USBVideo.SvcDesc="USB Video Device (WDM)"
+
+PlugIn_IMyExtensionUnit="HiteVision Extension Unit Interface"
